@@ -34,8 +34,8 @@ jobs:
     env:
       PACKAGENAME: "conda-build[a-zA-Z0-9-.]*-${{ inputs.package_name }}-${{ inputs.version }}"
     steps:
-    - uses: actions/checkout@v3
-    - uses: mamba-org/setup-micromamba@v1
+    - uses: actions/checkout@v4
+    - uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-name: condaupload
@@ -47,7 +47,7 @@ jobs:
 
     - name: Download built conda package from another workflow
       if: inputs.build_workflow != ''
-      uses: dawidd6/action-download-artifact@v2
+      uses: dawidd6/action-download-artifact@v3
       with:
         name: ${{ env.PACKAGENAME }}
         name_is_regexp: true
@@ -56,7 +56,7 @@ jobs:
 
     - name: Download built conda package from same workflow
       if: inputs.build_workflow == ''
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: ${{ runner.temp }}/conda_builds
 

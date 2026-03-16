@@ -24,18 +24,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       id: branch-exists
       with:
         path: tmp/gh-pages
         ref: gh-pages
       continue-on-error: true
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0  # used to build docs into the gh-pages branch without losing branch history. See https://github.com/jimporter/mike/issues/49
 
-    - uses: mamba-org/setup-micromamba@v1
+    - uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-name: ${{ github.event.repository.name }}-docs-${{ hashFiles('requirements/dev.txt') }}

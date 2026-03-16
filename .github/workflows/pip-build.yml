@@ -48,8 +48,8 @@ jobs:
         echo "Please go to \"settings \> secrets \> actions\" to create it before trying to build the pip package."
         exit 1
 
-    - uses: actions/checkout@v3
-    - uses: mamba-org/setup-micromamba@v1
+    - uses: actions/checkout@v4
+    - uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-name: pipbuild
@@ -64,7 +64,7 @@ jobs:
       run: python -m build
 
     - name: Create built package artifact ready for upload on release
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ env.PACKAGENAME }}
         path: dist/*
@@ -75,7 +75,7 @@ jobs:
     if: needs.pip-build.result == 'success'
     runs-on: ubuntu-latest
     steps:
-    - uses: mamba-org/setup-micromamba@v1
+    - uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-name: pipbuild
@@ -87,7 +87,7 @@ jobs:
         cache-environment: true
 
     - name: Download built package from same workflow
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: ${{ env.PACKAGENAME }}
         path: dist/
@@ -102,7 +102,7 @@ jobs:
     if: needs.pip-build.result == 'success' && needs.pip-test-build.result == 'success'
     runs-on: ubuntu-latest
     steps:
-    - uses: mamba-org/setup-micromamba@v1
+    - uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-name: pipbuild
@@ -114,7 +114,7 @@ jobs:
         cache-environment: true
 
     - name: Download built package from same workflow
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: ${{ env.PACKAGENAME }}
         path: dist/

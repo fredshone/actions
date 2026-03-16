@@ -53,7 +53,7 @@ jobs:
   test:
     runs-on: ${{ inputs.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Use supplied Mamba environment name
       if: inputs.mamba_env_name != ''
@@ -63,7 +63,7 @@ jobs:
       if: inputs.mamba_env_name == ''
       run: echo "MAMBAENVNAME=${{ inputs.os }}-3${{ inputs.py3version }}-${{ hashFiles('requirements/dev.txt') }}" >> $GITHUB_ENV
 
-    - uses: mamba-org/setup-micromamba@v1
+    - uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-name: ${{ github.event.repository.name }}-${{ env.MAMBAENVNAME }}
@@ -92,7 +92,7 @@ jobs:
       run: pytest ${{ inputs.pytest_args }}
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       if: inputs.upload_to_codecov
       env:
         directory: "./reports/coverage/"

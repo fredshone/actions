@@ -25,8 +25,8 @@ jobs:
   memory-profiler:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: mamba-org/setup-micromamba@v1
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
         with:
           micromamba-version: latest
           environment-name: ${{ github.event.repository.name }}-ubuntu-latest-3${{ inputs.py3version }}-profiling-${{ hashFiles('requirements/dev.txt') }}
@@ -55,7 +55,7 @@ jobs:
 
       - name: Upload flamegraph(s)
         if: inputs.upload_flamegraph == true
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: memory-profiling-flamegraphs
           path: ~/flamegraphs/*.html
